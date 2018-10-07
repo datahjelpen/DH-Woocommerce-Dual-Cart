@@ -78,16 +78,40 @@ function run_dh_woocommerce_dual_cart() {
 	$plugin = new Dh_Woocommerce_Dual_Cart();
 	$plugin->run();
 
-	// add_action( 'wp_ajax_my_action', 'my_action' );
-	add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
+	add_action( 'wp_ajax_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart' );
+	add_action( 'wp_ajax_nopriv_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart' );
 }
 run_dh_woocommerce_dual_cart();
 
-function my_action() {
+
+function add_to_request_list_dh_woocommerce_dual_cart() {
 	global $wpdb; // this is how you get access to the database
 
 	$product_id = intval( $_POST['product_id'] );
-	echo $product_id;
+
+	add_to_request_list_notice_dh_woocommerce_dual_cart($product_id);
+
+	echo true;
 
 	wp_die(); // this is required to terminate immediately and return a proper response
+}
+
+function add_to_request_list_notice_dh_woocommerce_dual_cart($product_id = null) {
+	global $woocommerce;
+
+	$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
+
+	$titles[] = get_the_title( $product_id );
+
+	$titles = array_filter( $titles );
+	$added_text = sprintf( _n( '%s has been added to your request list.', '%s have been added to your request list.', sizeof( $titles ), 'woocommerce' ), wc_format_list_of_items( $titles ) );
+
+	$message = sprintf( '%s <a href="%s" class="button">%s</a> <a href="%s" class="button">%s</a>',
+									esc_html( $added_text ),
+									esc_url( wc_get_page_permalink( 'checkout' ) ),
+									esc_html__( 'Checkout', 'woocommerce' ),
+									esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ),
+									esc_html__( 'Continue shopping', 'dh_woocommerce_dual_cart' ));
+
+	wc_add_notice( $message, 'success' );
 }

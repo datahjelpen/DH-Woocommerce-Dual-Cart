@@ -1,48 +1,23 @@
 (function( $ ) {
 	'use strict';
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+	// The data we send to the backend
+	const data = {
+		'action': 'add_to_request_list_dh_woocommerce_dual_cart',
+		'product_id': ajax_object.product_id
+	};
 
-	jQuery(document).ready(function ($) {
-		var data = {
-			'action': 'my_action',
-			'product_id': ajax_object.product_id
-		};
+	const btnCartRequestList = $('#button-cart_request_list');        // The button that triggers everything
 
-		const btnCartRequestList = jQuery('#button-cart_request_list');
-		const intervalLoadTime = 200;
-		const maxLoadTime = 1000;
-
-		let originalHTML = btnCartRequestList[0].innerHTML;
+	if (btnCartRequestList[0] != null) {
+		const originalHTML = btnCartRequestList[0].innerHTML;           // Store the buttons original HTML
+		const intervalLoadTime = 200;                                   // How long between each load "animation"
+		const maxLoadTime = intervalLoadTime*5;                         // Maximum amount of load time before we say something went wrong
 
 		btnCartRequestList.click(function() {
+			let loadingDone = false;
 
+			// Loading "animation"
 			btnCartRequestList[0].innerHTML = '...';
 			let loadingInterval = setInterval(() => {
 				btnCartRequestList[0].innerHTML += '.';
@@ -51,19 +26,36 @@
 			// Clear interval after a certian amount of time
 			setTimeout(() => {
 				clearInterval(loadingInterval);
+
+				// Loading was not done, something must have gone wrong
+				if (!loadingDone) {
+					loadingDone = true;
+					btnCartRequestList[0].innerHTML = 'Noe gikk galt';
+
+					// Restore the buttons original HTML after some time
+					setTimeout(() => {
+						btnCartRequestList[0].innerHTML = originalHTML;
+					}, 2500);
+				}
 			}, maxLoadTime);
 
-			jQuery.post(ajax_object.ajax_url, data, function (response) {
+			// Send the data to the backend
+			$.post(ajax_object.ajax_url, data, function (response) {
 				// Clear interval when post request is done
 				clearInterval(loadingInterval);
+				loadingDone = true;
 
 				// Set the buttons HTML back to what it originally was
 				btnCartRequestList[0].innerHTML = originalHTML;
-				console.log(response);
+
+				response = JSON.parse(response)
+
+				if (response) {
+					location.reload();
+				}
 			});
 
 		});
-	});
-
+	}
 
 })( jQuery );
