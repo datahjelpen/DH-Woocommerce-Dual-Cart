@@ -104,7 +104,7 @@ class Dh_Woocommerce_Dual_Cart_Public {
 				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dh-woocommerce-dual-cart-public.js', array( 'jquery' ), $this->version, true );
 				wp_localize_script( $this->plugin_name, 'ajax_object', array(
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
-					'product_id' => $_product->id
+					'product_id' => $_product->get_id()
 				));
 			}
 	}

@@ -4,7 +4,8 @@
 	// The data we send to the backend
 	const data = {
 		'action': 'add_to_request_list_dh_woocommerce_dual_cart',
-		'product_id': ajax_object.product_id
+		'product_id': ajax_object.product_id,
+		'count': 1
 	};
 
 	const btnCartRequestList = $('#button-cart_request_list');        // The button that triggers everything
@@ -16,6 +17,10 @@
 
 		btnCartRequestList.click(function() {
 			let loadingDone = false;
+
+			let count = $('form.cart .quantity input');
+			count = count.val();
+			data.count = count;
 
 			// Loading "animation"
 			btnCartRequestList[0].innerHTML = '...';
@@ -50,8 +55,9 @@
 
 				response = JSON.parse(response)
 
+				// Refresh the window, but let's not resend POST data
 				if (response) {
-					location.reload();
+					window.location.href = window.location.href;
 				}
 			});
 
