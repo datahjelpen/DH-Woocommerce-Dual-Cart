@@ -30,7 +30,10 @@ class Dh_Woocommerce_Dual_Cart_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		if( !class_exists( 'WooCommerce' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die( __( 'Please install and Activate WooCommerce.', 'dh-woocommerce-dual-cart' ), 'Plugin dependency check', array( 'back_link' => true ) );
+		}
 	}
 
 }
