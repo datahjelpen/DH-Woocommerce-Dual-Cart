@@ -155,7 +155,7 @@ function add_to_request_list_notice_dh_woocommerce_dual_cart($product_id = null,
 									esc_html( $amount_text ),
 									esc_html( $added_text ),
 									esc_url( wc_get_page_permalink( 'cart' ) ),
-									esc_html__( 'View request list', 'woocommerce' ));
+									esc_html__( 'View request list', 'dh-woocommerce-dual-cart' ));
 
 	wc_add_notice( $message, 'success' );
 }
