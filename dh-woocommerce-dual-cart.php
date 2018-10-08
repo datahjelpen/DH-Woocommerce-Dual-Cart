@@ -113,33 +113,20 @@ function add_to_request_list_dh_woocommerce_dual_cart() {
 	$request_list = $_SESSION['dh_woocommerce_dual_cart_request_list'];
 	$product_was_in_list = false;
 
-	// Make the product object that we put in the list
-	$_product = new stdClass;
-	$_product->id = $product_id;
-	$_product->count = $product_count;
-
-	// Let's first loop through our list to make sure we don't already have the product in it.
 	// If our product is in the list, just up the counter
-	foreach ($request_list as $item) {
-		if ($_product->id == $item->id) {
-			$product_was_in_list = true;
-			$item->count += $_product->count;
-			continue;
-		}
+	if (isset($_SESSION['dh_woocommerce_dual_cart_request_list'][$product_id])) {
+		$product_count += $_SESSION['dh_woocommerce_dual_cart_request_list'][$product_id];
 	}
 
-	// Product was not in the list, add it
-	if (!$product_was_in_list) {
-		array_push($_SESSION['dh_woocommerce_dual_cart_request_list'], $_product);
-	}
+	$_SESSION['dh_woocommerce_dual_cart_request_list'][$product_id] = $product_count;
 
 	// Make a notice for the front-end that the product was added to the list
-	add_to_request_list_notice_dh_woocommerce_dual_cart($_product->id, $_product->count);
+	add_to_request_list_notice_dh_woocommerce_dual_cart($product_id, $product_count);
 
 	// Return true as everything went well
 	echo true;
 
-	wp_die(); // this is required to terminate immediately and return a proper response
+	wp_die();
 }
 
 function add_to_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1) {
