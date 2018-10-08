@@ -78,12 +78,23 @@ function run_dh_woocommerce_dual_cart() {
 	$plugin = new Dh_Woocommerce_Dual_Cart();
 	$plugin->run();
 
+	// Session storage
 	add_action('init', 'session_start_dh_woocommerce_dual_cart', 1);
 	add_action('wp_logout', 'session_end_dh_woocommerce_dual_cart');
 	add_action('wp_login', 'session_end_dh_woocommerce_dual_cart');
 
+	// Add to request list
 	add_action( 'wp_ajax_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart' );
 	add_action( 'wp_ajax_nopriv_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart' );
+
+	// Remove from request list
+	add_action( 'wp_ajax_remove_from_request_list_dh_woocommerce_dual_cart', 'remove_from_request_list_dh_woocommerce_dual_cart' );
+	add_action( 'wp_ajax_nopriv_remove_from_request_list_dh_woocommerce_dual_cart', 'remove_from_request_list_dh_woocommerce_dual_cart' );
+
+	// Update request list
+	add_action( 'wp_ajax_update_request_list_dh_woocommerce_dual_cart', 'update_request_list_dh_woocommerce_dual_cart' );
+	add_action( 'wp_ajax_nopriv_update_request_list_dh_woocommerce_dual_cart', 'update_request_list_dh_woocommerce_dual_cart' );
+
 	// Cart page HTML
 	add_filter('woocommerce_before_cart_table', 'woocommerce_before_cart_table_dh_woocommerce_dual_cart', 11);
 	add_filter('woocommerce_after_cart_table', 'woocommerce_after_cart_table_dh_woocommerce_dual_cart', 11);
@@ -147,6 +158,40 @@ function add_to_request_list_notice_dh_woocommerce_dual_cart($product_id = null,
 									esc_html__( 'View request list', 'woocommerce' ));
 
 	wc_add_notice( $message, 'success' );
+}
+
+function remove_from_request_list_dh_woocommerce_dual_cart() {
+	$product_id = intval( htmlspecialchars($_POST['product_id']) );
+
+	if (isset($_SESSION['dh_woocommerce_dual_cart_request_list'][$product_id])) {
+		unset($_SESSION['dh_woocommerce_dual_cart_request_list'][$product_id]);
+		echo true;
+		wp_die();
+	}
+
+	echo false;
+	wp_die();
+}
+
+function update_request_list_dh_woocommerce_dual_cart() {
+	$updated_list = intval( htmlspecialchars($_POST['updated_list']) );
+	$updated_list = json_decode($updated_list);
+
+	foreach ($updated_list as $key => $value) {
+		if (isset($_SESSION['dh_woocommerce_dual_cart_request_list'][$key])) {
+			$_SESSION['dh_woocommerce_dual_cart_request_list'][$key] = $value;
+
+			if ($value == 0) {
+				unset($_SESSION['dh_woocommerce_dual_cart_request_list'][$key]);
+			}
+		} else {
+			echo false;
+			wp_die();
+		}
+	}
+
+	echo true;
+	wp_die();
 }
 
 function woocommerce_before_cart_table_dh_woocommerce_dual_cart() {

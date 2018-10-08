@@ -73,7 +73,6 @@ class Dh_Woocommerce_Dual_Cart_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dh-woocommerce-dual-cart-public.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -95,15 +94,20 @@ class Dh_Woocommerce_Dual_Cart_Public {
 		 * class.
 		 */
 
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dh-woocommerce-dual-cart-public.js', array( 'jquery' ), $this->version, true );
+
 		global $post;
 		$_pf = new WC_Product_Factory();
 		$_product = $_pf->get_product($post);
 
 		if ($_product != false) {
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dh-woocommerce-dual-cart-public.js', array( 'jquery' ), $this->version, true );
 			wp_localize_script( $this->plugin_name, 'ajax_object', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'product_id' => $_product->get_id()
+			));
+		} else {
+			wp_localize_script( $this->plugin_name, 'ajax_object', array(
+				'ajax_url' => admin_url( 'admin-ajax.php' )
 			));
 		}
 	}
