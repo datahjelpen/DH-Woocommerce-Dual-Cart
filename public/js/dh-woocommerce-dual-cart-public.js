@@ -1,6 +1,33 @@
 (function( $ ) {
 	'use strict';
 
+	// Item counter in navigation
+	(function() {
+		let requestList;
+
+		if (window.is_mobile) {
+			requestList = document.querySelector('#mobile-secondary .secondary-menu-request_list i');
+		} else {
+			requestList = document.querySelector('#secondary .secondary-menu-request_list i');
+		}
+
+		if (document.body.classList.contains('request_list-has-items')) {
+			// requestList.setAttribute('class', 'icon-shopping-1');
+			const node = document.createElement('div');
+			node.classList.add('cart-items-count');
+			node.innerHTML = ajax_object.request_list_item_count || 0;
+			requestList.appendChild(node);
+		}
+	})();
+
+	// Refresh the window, without sending POST
+	function refreshNoPost() {
+		let currentPage = new URL(window.location.href);
+		currentPage.searchParams.set('r', (+new Date * Math.random()).toString(36).substring(0, 5));
+		window.location.href = currentPage.href;
+	}
+
+	// Add to request list
 	const btnCartRequestList = $('#button-cart_request_list');        // The button that triggers adding
 	if (btnCartRequestList[0] != null) {
 		// The data we send to the backend
@@ -52,17 +79,13 @@
 				// Set the buttons HTML back to what it originally was
 				btnCartRequestList[0].innerHTML = originalHTML;
 
-				response = JSON.parse(response)
-
-				// Refresh the window, but let's not resend POST data
-				if (response) {
-					window.location.href = window.location.href;
-				}
+				refreshNoPost();
 			});
 
 		});
 	}
 
+	// Remove from request list
 	const cartRequestListCart = $('#dh-woocommerce-dual-cart-cart'); // Request list on the cart page
 	if (cartRequestListCart[0]) {
 		// Remove item from request list when user clicks on the remove button
@@ -77,17 +100,12 @@
 
 			// Send the data to the backend
 			$.post(ajax_object.ajax_url, data, function (response) {
-				response = JSON.parse(response)
-
-				// Refresh the window, but let's not resend POST data
-				if (response) {
-					listItem.parent().parent().remove();
-				} else {
-					console.error('Could not remove item from request list');
-				}
+				listItem.parent().parent().remove();
+				refreshNoPost();
 			});
 		})
 
+		// Update items count in request list
 		const updateCountsButton = cartRequestListCart.find('.actions button.button[name="update_request_list"]');
 		updateCountsButton.click(function(e) {
 			// Update list item counts
@@ -117,11 +135,7 @@
 				response = JSON.parse(response)
 				updateCountsButton.prop('disabled', false);
 
-				// Refresh the window, but let's not resend POST data
-				if (response) {
-				} else {
-					console.error('Could not update the request list');
-				}
+				refreshNoPost();
 			});
 		});
 	}

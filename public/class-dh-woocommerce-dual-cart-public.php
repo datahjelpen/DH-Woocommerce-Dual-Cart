@@ -99,16 +99,24 @@ class Dh_Woocommerce_Dual_Cart_Public {
 		global $post;
 		$_pf = new WC_Product_Factory();
 		$_product = $_pf->get_product($post);
+		$item_count = $_SESSION['dh_woocommerce_dual_cart_request_list_count'];
 
 		if ($_product != false) {
 			wp_localize_script( $this->plugin_name, 'ajax_object', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'product_id' => $_product->get_id()
+				'product_id' => $_product->get_id(),
+				'request_list_item_count' => $item_count
 			));
 		} else {
 			wp_localize_script( $this->plugin_name, 'ajax_object', array(
-				'ajax_url' => admin_url( 'admin-ajax.php' )
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'request_list_item_count' => $item_count
 			));
+		}
+
+		$template_name = get_post_meta($post->ID, '_wp_page_template', true);
+		if ($template_name == 'templates/cart.php') {
+			wp_enqueue_script($this->plugin_name . '-checkout', plugin_dir_url(__FILE__) . 'js/dh-woocommerce-dual-cart-public-checkout.js', array('jquery'), $this->version, true);
 		}
 	}
 }
