@@ -6,3 +6,11 @@
  body.request_list-page #dhwcdc_form {
      display: none;
  }
+
+body.single-product .woocommerce-variation-add-to-cart-disabled #buttons-cart .button-cart_request_list {
+    opacity: 0.5;
+}
+
+body.single-product .woocommerce-variation-add-to-cart-enabled #buttons-cart .button-cart_request_list {
+    opacity: 1;
+}
