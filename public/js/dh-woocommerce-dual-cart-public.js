@@ -31,7 +31,7 @@
 	const btnCartRequestList = $('#button-cart_request_list');        // The button that triggers adding
 	if (btnCartRequestList[0] != null) {
 		// The data we send to the backend
-		const data = {
+		let data = {
 			'action': 'add_to_request_list_dh_woocommerce_dual_cart',
 			'product_id': ajax_object.product_id,
 			'count': 1
@@ -47,6 +47,33 @@
 			let count = $('form.cart .quantity input');
 			count = count.val();
 			data.count = count;
+
+			let form = document.querySelector('form.variations_form.cart') || document.querySelector('#form-single-product');
+			let gotProduct = false;
+			let gotVariation = false;
+
+			if (form) {
+				form = $(form);
+				gotProduct = true;
+
+				if (form.hasClass('variations_form')) {
+					// Variable product
+					gotVariation = true;
+					const varInput = form.find('input[name="variation_id"]');
+					let varID = parseInt(varInput.val());
+
+					if (varID) {
+						data.product_id = varInput.val();
+					} else {
+						alert('Velg en farge');
+						return false;
+					}
+				} else {
+					// Simple product
+				}
+			} else {
+				// No product selected
+			}
 
 			// Loading "animation"
 			btnCartRequestList[0].innerHTML = '...';
