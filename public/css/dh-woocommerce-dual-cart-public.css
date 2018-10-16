@@ -14,3 +14,10 @@ body.single-product .woocommerce-variation-add-to-cart-disabled #buttons-cart .b
 body.single-product .woocommerce-variation-add-to-cart-enabled #buttons-cart .button-cart_request_list {
     opacity: 1;
 }
+
+#dhwcdc_form form input[type="submit"].button {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.25em;
+    color: #ffffff;
+    background-color: #fb3640;
+}

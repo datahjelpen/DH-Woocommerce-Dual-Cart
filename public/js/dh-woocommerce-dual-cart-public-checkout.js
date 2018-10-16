@@ -57,12 +57,21 @@
     } else {
         buttonRevealer.click( function(e) {
             e.preventDefault();
+
+            // Scroll back up
+            $([document.documentElement, document.body]).animate({
+                scrollTop: 0
+            }, 200);
+
+            // Setup the back button
             buttonBack.find('span').text('Tilbake');
             buttonBack.attr('href', '/foresporsel-liste');
 
+            // Hide old elements
             requestList.hide()
             $(this).hide();
 
+            // Show new element
             form.show();
         });
     }
