@@ -265,13 +265,11 @@ function dhwcdc_load_template($template) {
 
 	$template_name = get_post_meta($post->ID, '_wp_page_template', true);
 
-	// if (!isset($this->templates[$template_name])) {
-	// 	return $template;
-	// }
-
-	$file = plugin_dir_path(__FILE__) . $template_name;
-	if (file_exists($file)) {
-		return $file;
+	if ($template_name == 'templates/cart.php') {
+		$file = plugin_dir_path(__FILE__) . $template_name;
+		if (file_exists($file)) {
+			return $file;
+		}
 	}
 
 	return $template;
