@@ -9,7 +9,7 @@
                 <div class="woocommerce">
                     <section class="layout-square-medium">
                         <?php wc_print_notices(); ?>
-                        <a id="dhwcdc_button_back" href="<?= get_permalink(wc_get_page_id('shop')) ?>" class="button"><i class="icon-arrow-31"></i><span class="text"><?= __('Continue shopping', 'woocommerce') ?></span></a>
+                        <a id="dhwcdc_button_back" href="<?= get_permalink(wc_get_page_id('shop')) ?>" class="button"><i class="icon-arrow-31"></i><span class="text"><?= __('Continue ordering', 'dh-woocommerce-dual-cart') ?></span></a>
 
                         <div id="dhwcdc_request_list">
                             <h3><?= __('Request list', 'dh-woocommerce-dual-cart') ?></h3>
