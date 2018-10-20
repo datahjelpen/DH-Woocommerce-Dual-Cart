@@ -152,7 +152,7 @@
                             <h3>Vi trenger bare noen detaljer først ...</h3>
                             <p>Vennligst fyll ut skjema</p>
 
-                            <?php echo do_shortcode('[caldera_form id="CF5bc4fe7f5e267"]') ?>
+                            <?= the_content(); ?>
 
                             <form id="dh-uploader-form" enctype="multipart/form-data" method="POST" action="https://i.xdh.no/upload">
                                 <input type="file" id="dh-uploader-input" class="invisible" name="image[]" required="" multiple="" data-max-size="128MiB">
