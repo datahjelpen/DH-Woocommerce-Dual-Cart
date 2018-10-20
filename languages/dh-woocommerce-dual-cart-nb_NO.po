@@ -12,6 +12,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: nb_NO\n"
 
+msgid "Continue ordering"
+msgstr "Fortsett å bestille"
+
 msgid "Update request list"
 msgstr "Oppdater forespørsel liste"
 
@@ -20,6 +23,9 @@ msgstr "Vis forespørsel liste"
 
 msgid "Request list"
 msgstr "Forespørsel liste"
+
+msgid "Your request list has been updated"
+msgstr "Din forespørsel liste har blitt oppdatert"
 
 msgid "%s has been added to your request list."
 msgid_plural "%s have been added to your request list."

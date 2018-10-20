@@ -163,7 +163,7 @@ function remove_from_request_list_notice_dh_woocommerce_dual_cart($product_id = 
 // Notice: List updated
 function updated_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1) {
 	global $woocommerce;
-	$message = __('Your request list has been updated.', 'dh-woocommerce-dual-cart');
+	$message = __('Your request list has been updated', 'dh-woocommerce-dual-cart');
 	wc_add_notice( $message, 'success' );
 }
 
