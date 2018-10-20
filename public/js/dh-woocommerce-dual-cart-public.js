@@ -39,7 +39,7 @@
 
 		const originalHTML = btnCartRequestList[0].innerHTML;           // Store the buttons original HTML
 		const intervalLoadTime = 200;                                   // How long between each load "animation"
-		const maxLoadTime = intervalLoadTime*5;                         // Maximum amount of load time before we say something went wrong
+		const maxLoadTime = intervalLoadTime*30;                         // Maximum amount of load time before we say something went wrong
 
 		btnCartRequestList.click(function() {
 			let loadingDone = false;
