@@ -278,18 +278,20 @@ function dhwcdc_load_template($template) {
 function dhwcdc_add_body_classes($classes)
 {
 	global $post;
-	$template_name = get_post_meta($post->ID, '_wp_page_template', true);
+	if ($post != null) {
+		$template_name = get_post_meta($post->ID, '_wp_page_template', true);
 
-	// Add classes when we have items in our request list
-	if ($_SESSION['dh_woocommerce_dual_cart_request_list_count'] > 0) {
-		$classes[] .= 'request_list-has-items';
-	} else {
-		$classes[] .= 'request_list-empty';
-	}
+		// Add classes when we have items in our request list
+		if ($_SESSION['dh_woocommerce_dual_cart_request_list_count'] > 0) {
+			$classes[] .= 'request_list-has-items';
+		} else {
+			$classes[] .= 'request_list-empty';
+		}
 
-	// Add classes when we are on our request list template page
-	if ($template_name == 'templates/cart.php') {
-		$classes[] .= 'request_list-page woocommerce-page woocommerce-cart page-template-default';
+		// Add classes when we are on our request list template page
+		if ($template_name == 'templates/cart.php') {
+			$classes[] .= 'request_list-page woocommerce-page woocommerce-cart page-template-default';
+		}
 	}
 
 	return $classes;
