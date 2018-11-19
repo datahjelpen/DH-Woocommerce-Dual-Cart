@@ -20,7 +20,8 @@
  * @subpackage Dh_Woocommerce_Dual_Cart/public
  * @author     Datahjelpen AS <post@datahjelpen.no>
  */
-class Dh_Woocommerce_Dual_Cart_Public {
+class Dh_Woocommerce_Dual_Cart_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,7 +48,8 @@ class Dh_Woocommerce_Dual_Cart_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
@@ -58,7 +60,8 @@ class Dh_Woocommerce_Dual_Cart_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -72,7 +75,7 @@ class Dh_Woocommerce_Dual_Cart_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dh-woocommerce-dual-cart-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/dh-woocommerce-dual-cart-public.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -80,7 +83,8 @@ class Dh_Woocommerce_Dual_Cart_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -94,7 +98,7 @@ class Dh_Woocommerce_Dual_Cart_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dh-woocommerce-dual-cart-public.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/dh-woocommerce-dual-cart-public.js', array('jquery'), $this->version, true);
 
 		global $post;
 		if ($post != null) {
@@ -103,14 +107,14 @@ class Dh_Woocommerce_Dual_Cart_Public {
 			$item_count = $_SESSION['dh_woocommerce_dual_cart_request_list_count'];
 
 			if ($_product != false) {
-				wp_localize_script( $this->plugin_name, 'ajax_object', array(
-					'ajax_url' => admin_url( 'admin-ajax.php' ),
+				wp_localize_script($this->plugin_name, 'ajax_object', array(
+					'ajax_url' => admin_url('admin-ajax.php'),
 					'product_id' => $_product->get_id(),
 					'request_list_item_count' => $item_count
 				));
 			} else {
-				wp_localize_script( $this->plugin_name, 'ajax_object', array(
-					'ajax_url' => admin_url( 'admin-ajax.php' ),
+				wp_localize_script($this->plugin_name, 'ajax_object', array(
+					'ajax_url' => admin_url('admin-ajax.php'),
 					'request_list_item_count' => $item_count
 				));
 			}
@@ -118,6 +122,9 @@ class Dh_Woocommerce_Dual_Cart_Public {
 			$template_name = get_post_meta($post->ID, '_wp_page_template', true);
 			if ($template_name == 'templates/cart.php') {
 				wp_enqueue_script($this->plugin_name . '-checkout', plugin_dir_url(__FILE__) . 'js/dh-woocommerce-dual-cart-public-checkout.js', array('jquery'), $this->version, true);
+				wp_localize_script($this->plugin_name . '-checkout', 'ajax_object', array(
+					'ajax_url' => admin_url('admin-ajax.php')
+				));
 			}
 		}
 	}

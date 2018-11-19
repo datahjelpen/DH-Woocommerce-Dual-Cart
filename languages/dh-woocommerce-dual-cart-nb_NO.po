@@ -31,3 +31,8 @@ msgid "%s has been added to your request list."
 msgid_plural "%s have been added to your request list."
 msgstr[0] "%s er lagt til forespørsel listen din."
 msgstr[1] "%s er lagt til forespørsel listen din."
+
+msgid "%s has been removed to your request list."
+msgid_plural "%s have been removed to your request list."
+msgstr[0] "%s er fjernet fra forespørsel listen din."
+msgstr[1] "%s er fjernet fra forespørsel listen din."

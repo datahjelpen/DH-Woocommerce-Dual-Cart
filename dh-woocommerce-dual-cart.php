@@ -26,7 +26,7 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if (!defined('WPINC')) {
 	die;
 }
 
@@ -35,14 +35,15 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NAME_VERSION', '1.0.0' );
+define('PLUGIN_NAME_VERSION', '1.0.0');
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-dh-woocommerce-dual-cart-activator.php
  */
-function activate_dh_woocommerce_dual_cart() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dh-woocommerce-dual-cart-activator.php';
+function activate_dh_woocommerce_dual_cart()
+{
+	require_once plugin_dir_path(__FILE__) . 'includes/class-dh-woocommerce-dual-cart-activator.php';
 	Dh_Woocommerce_Dual_Cart_Activator::activate();
 }
 
@@ -50,19 +51,20 @@ function activate_dh_woocommerce_dual_cart() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-dh-woocommerce-dual-cart-deactivator.php
  */
-function deactivate_dh_woocommerce_dual_cart() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dh-woocommerce-dual-cart-deactivator.php';
+function deactivate_dh_woocommerce_dual_cart()
+{
+	require_once plugin_dir_path(__FILE__) . 'includes/class-dh-woocommerce-dual-cart-deactivator.php';
 	Dh_Woocommerce_Dual_Cart_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_dh_woocommerce_dual_cart' );
-register_deactivation_hook( __FILE__, 'deactivate_dh_woocommerce_dual_cart' );
+register_activation_hook(__FILE__, 'activate_dh_woocommerce_dual_cart');
+register_deactivation_hook(__FILE__, 'deactivate_dh_woocommerce_dual_cart');
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-dh-woocommerce-dual-cart.php';
+require plugin_dir_path(__FILE__) . 'includes/class-dh-woocommerce-dual-cart.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,7 +75,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-dh-woocommerce-dual-cart.p
  *
  * @since    1.0.0
  */
-function run_dh_woocommerce_dual_cart() {
+function run_dh_woocommerce_dual_cart()
+{
 
 	$plugin = new Dh_Woocommerce_Dual_Cart();
 	$plugin->run();
@@ -84,16 +87,20 @@ function run_dh_woocommerce_dual_cart() {
 	add_action('wp_login', 'session_end_dh_woocommerce_dual_cart');
 
 	// Add to request list
-	add_action( 'wp_ajax_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart' );
-	add_action( 'wp_ajax_nopriv_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart' );
+	add_action('wp_ajax_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart');
+	add_action('wp_ajax_nopriv_add_to_request_list_dh_woocommerce_dual_cart', 'add_to_request_list_dh_woocommerce_dual_cart');
 
 	// Remove from request list
-	add_action( 'wp_ajax_remove_from_request_list_dh_woocommerce_dual_cart', 'remove_from_request_list_dh_woocommerce_dual_cart' );
-	add_action( 'wp_ajax_nopriv_remove_from_request_list_dh_woocommerce_dual_cart', 'remove_from_request_list_dh_woocommerce_dual_cart' );
+	add_action('wp_ajax_remove_from_request_list_dh_woocommerce_dual_cart', 'remove_from_request_list_dh_woocommerce_dual_cart');
+	add_action('wp_ajax_nopriv_remove_from_request_list_dh_woocommerce_dual_cart', 'remove_from_request_list_dh_woocommerce_dual_cart');
+
+	// Remove all from request list
+	add_action('wp_ajax_remove_all_from_request_list_dh_woocommerce_dual_cart', 'remove_all_from_request_list_dh_woocommerce_dual_cart');
+	add_action('wp_ajax_nopriv_remove_all_from_request_list_dh_woocommerce_dual_cart', 'remove_all_from_request_list_dh_woocommerce_dual_cart');
 
 	// Update request list
-	add_action( 'wp_ajax_update_request_list_dh_woocommerce_dual_cart', 'update_request_list_dh_woocommerce_dual_cart' );
-	add_action( 'wp_ajax_nopriv_update_request_list_dh_woocommerce_dual_cart', 'update_request_list_dh_woocommerce_dual_cart' );
+	add_action('wp_ajax_update_request_list_dh_woocommerce_dual_cart', 'update_request_list_dh_woocommerce_dual_cart');
+	add_action('wp_ajax_nopriv_update_request_list_dh_woocommerce_dual_cart', 'update_request_list_dh_woocommerce_dual_cart');
 
 	// Cart page HTML
 	add_filter('woocommerce_before_cart_table', 'woocommerce_before_cart_table_dh_woocommerce_dual_cart', 11);
@@ -107,8 +114,9 @@ function run_dh_woocommerce_dual_cart() {
 }
 run_dh_woocommerce_dual_cart();
 
-function session_start_dh_woocommerce_dual_cart() {
-	if(!session_id()) {
+function session_start_dh_woocommerce_dual_cart()
+{
+	if (!session_id()) {
 		session_start();
 	}
 
@@ -118,58 +126,65 @@ function session_start_dh_woocommerce_dual_cart() {
 	}
 }
 
-function session_end_dh_woocommerce_dual_cart() {
+function session_end_dh_woocommerce_dual_cart()
+{
 	session_destroy();
 }
 
 // Notice: item(s) added
-function add_to_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1) {
+function add_to_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1)
+{
 	global $woocommerce;
 
-	$titles[] = get_the_title( $product_id );
+	$titles[] = get_the_title($product_id);
 
-	$titles = array_filter( $titles );
-	$added_text = sprintf( _n( '%s has been added to your request list.', '%s have been added to your request list.', $product_count, 'dh-woocommerce-dual-cart' ), wc_format_list_of_items( $titles ) );
-	$amount_text = sprintf( _n( '', '%s x ', $product_count, 'dh-woocommerce-dual-cart'), esc_html($product_count) );
+	$titles = array_filter($titles);
+	$added_text = sprintf(_n('%s has been added to your request list.', '%s have been added to your request list.', $product_count, 'dh-woocommerce-dual-cart'), wc_format_list_of_items($titles));
+	$amount_text = sprintf(_n('', '%s x ', $product_count, 'dh-woocommerce-dual-cart'), esc_html($product_count));
 
 	// Example: 2 x ProductName have been added ...
 	//      or: ProductName has been added ...
-	$message = sprintf( '%s %s <a href="%s" class="button">%s</a>',
-									esc_html( $amount_text ),
-									esc_html( $added_text ),
-									'/foresporsel-liste',
-									esc_html__( 'View request list', 'dh-woocommerce-dual-cart' ));
+	$message = sprintf(
+		'%s %s <a href="%s" class="button">%s</a>',
+		esc_html($amount_text),
+		esc_html($added_text),
+		'/foresporsel-liste',
+		esc_html__('View request list', 'dh-woocommerce-dual-cart')
+	);
 
-	wc_add_notice( $message, 'success' );
+	wc_print_notice($message, 'success');
 }
 
 // Notice: item(s) removed
-function remove_from_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1) {
+function remove_from_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1)
+{
 	global $woocommerce;
 
-	$titles[] = get_the_title( $product_id );
+	$titles[] = get_the_title($product_id);
 
-	$titles = array_filter( $titles );
-	$added_text = sprintf( _n( '%s has been removed from your request list.', '%s have been removed from your request list.', $product_count, 'dh-woocommerce-dual-cart' ), wc_format_list_of_items( $titles ) );
-	$amount_text = sprintf( _n( '', '%s x ', $product_count, 'dh-woocommerce-dual-cart'), esc_html($product_count) );
+	$titles = array_filter($titles);
+	$added_text = sprintf(_n('%s has been removed from your request list.', '%s have been removed from your request list.', $product_count, 'dh-woocommerce-dual-cart'), wc_format_list_of_items($titles));
+	$amount_text = sprintf(_n('', '%s x ', $product_count, 'dh-woocommerce-dual-cart'), esc_html($product_count));
 
 	// Example: 2 x ProductName have been remove ...
 	//      or: ProductName has been remove ...
-	$message = sprintf( '%s %s', esc_html( $amount_text ), esc_html( $added_text ));
+	$message = sprintf('%s %s', esc_html($amount_text), esc_html($added_text));
 
-	wc_add_notice( $message, 'success' );
+	wc_print_notice($message, 'success');
 }
 
 // Notice: List updated
-function updated_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1) {
+function updated_request_list_notice_dh_woocommerce_dual_cart($product_id = null, $product_count = 1)
+{
 	global $woocommerce;
 	$message = __('Your request list has been updated', 'dh-woocommerce-dual-cart');
-	wc_add_notice( $message, 'success' );
+	wc_print_notice($message, 'success');
 }
 
 // Remove item from list
-function remove_from_request_list_dh_woocommerce_dual_cart() {
-	$product_id = intval( htmlspecialchars($_POST['product_id']) );
+function remove_from_request_list_dh_woocommerce_dual_cart()
+{
+	$product_id = intval(htmlspecialchars($_POST['product_id']));
 
 	if (isset($_SESSION['dh_woocommerce_dual_cart_request_list'][$product_id])) {
 		remove_from_request_list_notice_dh_woocommerce_dual_cart($product_id, $_SESSION['dh_woocommerce_dual_cart_request_list'][$product_id]);
@@ -180,6 +195,15 @@ function remove_from_request_list_dh_woocommerce_dual_cart() {
 	}
 
 	echo false;
+	wp_die();
+}
+
+// Remove all items from list
+function remove_all_from_request_list_dh_woocommerce_dual_cart()
+{
+	$_SESSION['dh_woocommerce_dual_cart_request_list'] = [];
+	$_SESSION['dh_woocommerce_dual_cart_request_list_count'] = 0;
+	echo true;
 	wp_die();
 }
 
@@ -214,7 +238,8 @@ function add_to_request_list_dh_woocommerce_dual_cart()
 }
 
 // Update item count in list
-function update_request_list_dh_woocommerce_dual_cart() {
+function update_request_list_dh_woocommerce_dual_cart()
+{
 	$updated_list = $_POST['updated_list'];
 
 	$_SESSION['dh_woocommerce_dual_cart_request_list_count'] = 0;
@@ -239,14 +264,16 @@ function update_request_list_dh_woocommerce_dual_cart() {
 	wp_die();
 }
 
-function woocommerce_before_cart_table_dh_woocommerce_dual_cart() {
-	require plugin_dir_path( __FILE__ ) . 'templates/cart_before.php';
+function woocommerce_before_cart_table_dh_woocommerce_dual_cart()
+{
+	require plugin_dir_path(__FILE__) . 'templates/cart_before.php';
 }
 // function woocommerce_after_cart_table_dh_woocommerce_dual_cart() {
 // 	require plugin_dir_path( __FILE__ ) . 'templates/cart.php';
 // }
 
-function custom_template($templates) {
+function custom_template($templates)
+{
 	$custom_templates = [
 		'templates/cart.php' => 'Forespørsel liste'
 	];
@@ -256,7 +283,8 @@ function custom_template($templates) {
 	return $templates;
 }
 
-function dhwcdc_load_template($template) {
+function dhwcdc_load_template($template)
+{
 	global $post;
 
 	if (!$post) {

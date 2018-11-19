@@ -30,3 +30,8 @@ msgid "%s has been added to your request list."
 msgid_plural "%s have been added to your request list."
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "%s has been removed to your request list."
+msgid_plural "%s have been removed to your request list."
+msgstr[0] ""
+msgstr[1] ""
