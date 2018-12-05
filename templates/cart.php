@@ -153,15 +153,6 @@
                             <p>Vennligst fyll ut skjema</p>
 
                             <?= the_content(); ?>
-
-                            <form id="dh-uploader-form" enctype="multipart/form-data" method="POST" action="https://i.xdh.no/upload">
-                                <input type="file" id="dh-uploader-input" class="invisible" name="image[]" required="" multiple="" data-max-size="128MiB">
-                                <input type="hidden" name="X-API-KEY" value="fck5rfsZKfpdRbG4npSVz3Qz">
-                                <button id="dh-uploader-submit" class="invisible" type="submit">submit</button>
-                            </form>
-
-                            <script src="https://i.xdh.no/upfiler/dist/js/upfiler.min.js"></script>
-                            <link rel="stylesheet" href="https://i.xdh.no/upfiler/dist/css/upfiler.css">
                         </div>
                     </div>
                 </div>
