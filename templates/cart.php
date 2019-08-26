@@ -91,7 +91,7 @@
 
                                             <td class="product-price" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
                                                 <?php
-                                                    echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ) ); // PHPCS: XSS ok.
+                                                    echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), ['product_id' => $_product->get_parent_id()] ); // PHPCS: XSS ok.
                                                 ?>
                                             </td>
 
